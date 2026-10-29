@@ -139,7 +139,7 @@
         <a href="https://business.google.com/us/business-profile/?fg=1">Business</a>
         <a href="https://www.google.com/search/howsearchworks/">How Search works</a>
       </nav>
-      <div class="footer-center">Build, create, and do more with AI tools from Google</div>
+      <div class="footer-center" id="networkInfo" aria-live="polite">Detecting country and IP…</div>
       <nav class="link-group" aria-label="Privacy and settings">
         <a href="https://policies.google.com/privacy">Privacy</a>
         <a href="https://policies.google.com/terms">Terms</a>
@@ -160,6 +160,22 @@
       const clearRecent = document.getElementById('clearRecent');
       const dropdownSearch = document.getElementById('dropdownSearch');
       const dropdownLucky = document.getElementById('dropdownLucky');
+      const networkInfo = document.getElementById('networkInfo');
+      fetch('https://ipwho.is/', { cache: 'no-store' })
+        .then(response => {
+          if (!response.ok) throw new Error('Network lookup failed');
+          return response.json();
+        })
+        .then(data => {
+          if (!data.success || !data.ip) throw new Error('Network lookup unavailable');
+          const country = data.country || data.country_code || 'Unknown country';
+          networkInfo.textContent = country + ' · IP: ' + data.ip;
+          networkInfo.title = 'Country detected from your public IP address';
+        })
+        .catch(() => {
+          networkInfo.textContent = 'Country and IP unavailable';
+          networkInfo.title = 'Could not detect your public IP address';
+        });
       const HISTORY_KEY = 'google_recent_searches_v1';
       const HISTORY_LIMIT = 6;
       let historyOpen = false;
