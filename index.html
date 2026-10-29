@@ -91,20 +91,17 @@
     @media(max-width:700px){.site-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:26px}.site-card{min-height:78px;padding:12px;gap:10px;border-radius:15px}.site-icon{width:34px;height:34px;border-radius:11px;font-size:12px}.site-name{font-size:13px}.site-desc{font-size:11px}.section-label{margin-top:24px}.topbar{height:60px;padding:0 16px}.top-left{gap:18px}.top-right{gap:12px}.top-right .top-links{gap:12px}main{padding:clamp(72px,12vh,120px) 20px 32px}.logo{width:220px;margin-bottom:25px}.searchbox{height:46px;padding:0 12px;gap:9px}.buttons{margin-top:24px;gap:8px}.search-btn{padding:0 12px;font-size:13px}.hint{margin-top:20px}.footer-links{grid-template-columns:1fr;justify-items:center;gap:16px;padding:18px 16px}.footer-center{white-space:normal;grid-row:1}.footer-links .link-group:last-child{justify-content:center}.link-group{justify-content:center;gap:16px 22px}.link-group a{white-space:nowrap}}
     @media(max-width:420px){.site-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.site-card{align-items:flex-start}.site-icon{width:32px;height:32px}.site-desc{display:none}}
     @media(max-height:560px){main{padding-top:24px}.logo{font-size:42px;margin-bottom:10px}.buttons{margin-top:18px}}
-    @media(max-height:560px){main{padding-top:24px}.logo{width:180px;margin-bottom:20px}.buttons{margin-top:18px}}
+    @media(max-height:560px){main{padding-top:24px}.logo{font-size:42px;margin-bottom:10px}.buttons{margin-top:18px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
   <header class="topbar">
-    <nav class="top-left" aria-label="Google information">
-      <a href="https://about.google/">About</a>
-      <a href="https://store.google.com/">Store</a>
-    </nav>
+    <a class="top-left home-brand" href="https://www.wwz.im/" aria-label="WWZ.iM home" style="font-weight:700;letter-spacing:-.5px;font-size:15px">WWZ.iM</a>
     <div class="top-right">
-      <nav class="top-links" aria-label="Google links">
-        <a href="https://mail.google.com/">Gmail</a>
-        <a href="https://images.google.com/">Images</a>
+      <nav class="top-links" aria-label="Quick links">
+        <a href="https://www.wwz.im/">Portfolio</a>
+        <a href="https://www.99218632.xyz/">Movies</a>
         <a class="icon-link apps" href="https://app.wwz.im/" aria-label="WWZ apps" title="WWZ apps">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg>
         </a>
@@ -116,12 +113,8 @@
   </header>
 
   <main>
-    <a class="google-logo-link" href="https://www.google.com/" aria-label="Go to Google homepage">
-    <picture>
-      <source srcset="https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_272x92dp.png" media="(prefers-color-scheme: dark)">
-      <img class="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" width="272" height="92" fetchpriority="high">
-    </picture>
-    </a>
+    <a class="google-logo-link" href="https://www.wwz.im/" aria-label="WWZ.iM home" style="text-decoration:none"><span class="logo">WWZ<span style="color:var(--muted)">.iM</span></span></a>
+    <p class="tagline">A personal space for tools, projects and inspiration</p>
     <form class="search-form" id="searchForm" action="https://www.google.com/search" method="get" role="search">
       <div class="searchbox">
         <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14A4.5 4.5 0 1 1 9.5 5a4.5 4.5 0 0 1 0 9z"/></svg>
@@ -142,20 +135,32 @@
       </div>
       <div class="hint" id="hint" aria-live="polite"></div>
     </form>
+      <div class="section-label">Your websites</div>
+      <nav class="site-grid" aria-label="Personal website navigation">
+        <a class="site-card" href="https://www.wwz.im/" target="_blank" rel="noopener noreferrer"><span class="site-icon">W</span><span class="site-copy"><span class="site-name">HomePage</span><span class="site-desc">Portfolio, work and articles</span></span></a>
+        <a class="site-card" href="https://app.wwz.im/" target="_blank" rel="noopener noreferrer"><span class="site-icon">APP</span><span class="site-copy"><span class="site-name">APP.WWZ.iM</span><span class="site-desc">Files and useful resources</span></span></a>
+        <a class="site-card" href="https://ip.wwz.im/" target="_blank" rel="noopener noreferrer"><span class="site-icon">IP</span><span class="site-copy"><span class="site-name">IP.WWZ.iM</span><span class="site-desc">Network information</span></span></a>
+        <a class="site-card" href="https://rmb.wwz.im/" target="_blank" rel="noopener noreferrer"><span class="site-icon">¥</span><span class="site-copy"><span class="site-name">RMB.WWZ.iM</span><span class="site-desc">Amount to Chinese uppercase</span></span></a>
+        <a class="site-card" href="https://sub.wwz.im/" target="_blank" rel="noopener noreferrer"><span class="site-icon">SUB</span><span class="site-copy"><span class="site-name">SUB.WWZ.iM</span><span class="site-desc">Proxy link converter</span></span></a>
+        <a class="site-card" href="https://vps.wwz.im/" target="_blank" rel="noopener noreferrer"><span class="site-icon">VPS</span><span class="site-copy"><span class="site-name">VPS.WWZ.iM</span><span class="site-desc">Server monitoring</span></span></a>
+        <a class="site-card" href="https://ulefone.wwz.im/" target="_blank" rel="noopener noreferrer"><span class="site-icon">U</span><span class="site-copy"><span class="site-name">Ulefone.WWZ.iM</span><span class="site-desc">Product video resources</span></span></a>
+        <a class="site-card" href="https://myip.wwz.im/" target="_blank" rel="noopener noreferrer"><span class="site-icon">MY</span><span class="site-copy"><span class="site-name">Myip</span><span class="site-desc">IP lookup and diagnostics</span></span></a>
+        <a class="site-card" href="https://www.99218632.xyz/" target="_blank" rel="noopener noreferrer"><span class="site-icon">▶</span><span class="site-copy"><span class="site-name">影视导航站</span><span class="site-desc">Films, live and TV resources</span></span></a>
+      </nav>
   </main>
 
   <footer>
     <div class="footer-links">
-      <nav class="link-group" aria-label="About Google">
-        <a href="https://ads.google.com/">Advertising</a>
-        <a href="https://business.google.com/us/business-profile/?fg=1">Business</a>
-        <a href="https://www.google.com/search/howsearchworks/">How Search works</a>
+      <nav class="link-group" aria-label="Personal links">
+        <a href="https://www.wwz.im/">HomePage</a>
+        <a href="https://app.wwz.im/">APP</a>
+        <a href="https://www.99218632.xyz/">Movies</a>
       </nav>
       <a class="footer-center" id="networkInfo" href="https://ip.wwz.im/" aria-label="View IP details" title="View IP details" aria-live="polite">Detecting country and IP…</a>
-      <nav class="link-group" aria-label="Privacy and settings">
-        <a href="https://policies.google.com/privacy">Privacy</a>
-        <a href="https://policies.google.com/terms">Terms</a>
-        <a href="https://www.google.com/preferences">Settings</a>
+      <nav class="link-group" aria-label="Utilities">
+        <a href="https://ip.wwz.im/">IP</a>
+        <a href="https://rmb.wwz.im/">RMB</a>
+        <a href="https://vps.wwz.im/">VPS</a>
       </nav>
     </div>
   </footer>
