@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#202124" media="(prefers-color-scheme: dark)">
-  <meta name="description" content="A clean, minimal Google Search homepage.">
-  <title>Google</title>
-  <link rel="icon" href="https://www.google.com/favicon.ico">
+  <meta name="description" content="WWZ.iM personal navigation — tools, projects, portfolio and media.">
+  <title>WWZ.iM — Personal Navigation</title>
+  <link rel="icon" href="https://wangwenzhi.eu.org/images/favicon_io/apple-touch-icon.png">
   <style>
     :root{color-scheme:light dark;--page:#fff;--text:#202124;--muted:#5f6368;--line:#dfe1e5;--hover:#f8f9fa;--footer:#f2f2f2;--footer-line:#dadce0;--focus:#1a73e8}
     @media(prefers-color-scheme:dark){:root{--page:#090909;--text:#e8eaed;--muted:#9aa0a6;--line:#292929;--hover:#171717;--footer:#050505;--footer-line:#202020;--focus:#8ab4f8}}
@@ -32,8 +32,18 @@
     .top-links>a:not(.apps){padding:7px 0}
     .icon-link{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
     .apps svg{width:22px;height:22px;fill:currentColor}
-    main{width:100%;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;padding:clamp(110px,16vh,160px) 22px 48px}
-    .logo{display:block;width:272px;max-width:65vw;height:auto;margin:0 auto 26px}
+    main{width:100%;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;padding:clamp(52px,8vh,86px) 22px 56px}
+    .logo{display:block;width:auto;max-width:80vw;height:auto;margin:0 auto 12px;font-size:clamp(42px,7vw,62px);font-weight:650;letter-spacing:-3px;line-height:1.1;color:var(--text)}
+    .tagline{margin:0 0 30px;color:var(--muted);font-size:13px;letter-spacing:.02em;text-align:center}
+    .site-grid{width:min(100%,760px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:34px}
+    .site-card{min-width:0;min-height:88px;display:flex;align-items:center;gap:13px;padding:15px 16px;border:1px solid transparent;border-radius:18px;background:var(--hover);transition:transform .18s,border-color .18s,background .18s}
+    .site-card:hover{transform:translateY(-2px);border-color:var(--line);text-decoration:none;background:var(--page)}
+    .site-icon{width:40px;height:40px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:13px;background:var(--page);color:var(--text);font-size:14px;font-weight:650;letter-spacing:-.5px}
+    .site-copy{min-width:0;display:flex;flex-direction:column;gap:5px}
+    .site-name{font-size:14px;font-weight:600;line-height:1.25;overflow-wrap:anywhere}
+    .site-desc{font-size:12px;line-height:1.35;color:var(--muted)}
+    .section-label{width:min(100%,760px);margin:28px 0 -18px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+    @media(prefers-color-scheme:dark){.site-card{background:#101010}.site-card:hover{background:#151515;border-color:#292929}.site-icon{background:#1b1b1b}}
     .search-form{width:min(100%,584px);position:relative}
     .searchbox{height:46px;width:100%;display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:0 14px;gap:12px;transition:box-shadow .18s,border-color .18s,background .18s}
     .search-form.history-open .searchbox{border-radius:26px 26px 0 0;border-bottom-color:transparent;box-shadow:0 1px 6px rgba(32,33,36,.22)}
@@ -78,8 +88,9 @@
     .link-group{display:flex;flex-wrap:wrap;gap:28px}
     .footer-center{text-align:center;white-space:nowrap;color:inherit;text-decoration:none;cursor:pointer}.footer-center:hover{text-decoration:underline}
     .footer-links .link-group:last-child{justify-content:flex-end}
-    @media(max-width:700px){.topbar{height:60px;padding:0 16px}.top-left{gap:18px}.top-right{gap:12px}.top-right .top-links{gap:12px}main{padding:clamp(72px,12vh,120px) 20px 32px}.logo{width:220px;margin-bottom:25px}.searchbox{height:46px;padding:0 12px;gap:9px}.buttons{margin-top:24px;gap:8px}.search-btn{padding:0 12px;font-size:13px}.hint{margin-top:20px}.footer-links{grid-template-columns:1fr;justify-items:center;gap:16px;padding:18px 16px}.footer-center{white-space:normal;grid-row:1}.footer-links .link-group:last-child{justify-content:center}.link-group{justify-content:center;gap:16px 22px}.link-group a{white-space:nowrap}}
-    @media(max-height:560px){main{padding-top:24px}.logo{width:180px;margin-bottom:20px}.buttons{margin-top:18px}}
+    @media(max-width:700px){.site-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:26px}.site-card{min-height:78px;padding:12px;gap:10px;border-radius:15px}.site-icon{width:34px;height:34px;border-radius:11px;font-size:12px}.site-name{font-size:13px}.site-desc{font-size:11px}.section-label{margin-top:24px}.topbar{height:60px;padding:0 16px}.top-left{gap:18px}.top-right{gap:12px}.top-right .top-links{gap:12px}main{padding:clamp(72px,12vh,120px) 20px 32px}.logo{width:220px;margin-bottom:25px}.searchbox{height:46px;padding:0 12px;gap:9px}.buttons{margin-top:24px;gap:8px}.search-btn{padding:0 12px;font-size:13px}.hint{margin-top:20px}.footer-links{grid-template-columns:1fr;justify-items:center;gap:16px;padding:18px 16px}.footer-center{white-space:normal;grid-row:1}.footer-links .link-group:last-child{justify-content:center}.link-group{justify-content:center;gap:16px 22px}.link-group a{white-space:nowrap}}
+    @media(max-width:420px){.site-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.site-card{align-items:flex-start}.site-icon{width:32px;height:32px}.site-desc{display:none}}
+    @media(max-height:560px){main{padding-top:24px}.logo{font-size:42px;margin-bottom:10px}.buttons{margin-top:18px}}
     @media(max-height:560px){main{padding-top:24px}.logo{width:180px;margin-bottom:20px}.buttons{margin-top:18px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
   </style>
@@ -114,7 +125,7 @@
     <form class="search-form" id="searchForm" action="https://www.google.com/search" method="get" role="search">
       <div class="searchbox">
         <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14A4.5 4.5 0 1 1 9.5 5a4.5 4.5 0 0 1 0 9z"/></svg>
-        <input id="query" type="search" name="q" aria-label="Search Google" autocomplete="off" spellcheck="false" required>
+        <input id="query" type="search" name="q" aria-label="Search the web" autocomplete="off" spellcheck="false" required>
         <button class="clear-btn" id="clearBtn" type="button" aria-label="Clear search" title="Clear">×</button>
         <button class="voice-btn" id="voiceBtn" type="button" aria-label="Search by voice" title="Search by voice">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285f4" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path fill="#34a853" d="M17 11a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.93V21h2v-3.07A7 7 0 0 0 19 11z"/><path fill="#ea4335" d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3z"/><path fill="#fbbc05" d="M9 5v6a3 3 0 0 0 3 3V2a3 3 0 0 0-3 3z"/></svg>
@@ -123,10 +134,10 @@
       <section class="recent" id="recentSection" aria-label="Recent searches" hidden>
         <div class="recent-head"><span>Recent searches</span><button class="recent-clear" id="clearRecent" type="button">Clear history</button></div>
         <ul class="recent-list" id="recentList"></ul>
-        <div class="recent-actions"><button class="search-btn" id="dropdownSearch" type="button">Google Search</button><button class="search-btn" id="dropdownLucky" type="button">I'm Feeling Lucky</button></div>
+        <div class="recent-actions"><button class="search-btn" id="dropdownSearch" type="button">Search the web</button><button class="search-btn" id="dropdownLucky" type="button">I'm Feeling Lucky</button></div>
       </section>
       <div class="buttons">
-        <button class="search-btn" type="submit">Google Search</button>
+        <button class="search-btn" type="submit">Search the web</button>
         <button class="search-btn" id="luckyBtn" type="button">I'm Feeling Lucky</button>
       </div>
       <div class="hint" id="hint" aria-live="polite"></div>
@@ -240,7 +251,7 @@
           networkInfo.textContent = 'Public IPv4 unavailable';
           networkInfo.title = 'This network may not have IPv4 connectivity, or all lookup services may be blocked';
         });
-      const HISTORY_KEY = 'google_recent_searches_v1';
+      const HISTORY_KEY = 'wwz_recent_searches_v1';
       const HISTORY_LIMIT = 6;
       let historyOpen = false;
       let historyRequestedByClick = false;
