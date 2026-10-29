@@ -168,7 +168,8 @@
         })
         .then(data => {
           const ip = data.ip;
-          if (!ip || !/^\\d{1,3}(?:\\.\\d{1,3}){3}$/.test(ip)) throw new Error('IPv4 unavailable');
+          const octets = typeof ip === 'string' ? ip.split('.') : [];
+          if (octets.length !== 4 || octets.some(part => !/^\\d{1,3}$/.test(part) || Number(part) > 255)) throw new Error('IPv4 unavailable');
           networkInfo.textContent = 'IPv4: ' + ip;
           networkInfo.title = 'Public IPv4 address detected by myip.is';
         })
