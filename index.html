@@ -174,7 +174,7 @@
         );
       };
 
-      const fetchData = async (url, timeout = 5000) => {
+      const fetchData = async (url, timeout = 2500) => {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), timeout);
         try {
@@ -189,18 +189,17 @@
 
       async function detectPublicIPv4() {
         const sources = [
-          async () => {
-            const data = await fetchData('https://api.ipify.org?format=json');
-            return data.ip;
-          },
+          async () => (await fetchData('https://api.ipify.org?format=json')).ip,
           async () => (await fetchData('https://ipv4.icanhazip.com')).ip,
           async () => (await fetchData('https://4.myip.is/')).ip,
           async () => (await fetchData('https://api4.my-ip.io/v2/ip.json')).ip
         ];
-        const results = await Promise.allSettled(sources.map(source => source()));
-        const ip = results.find(result => result.status === 'fulfilled' && isIPv4(String(result.value || '').trim()));
-        if (!ip) throw new Error('No IPv4 lookup service succeeded');
-        return String(ip.value).trim();
+        const ip = await Promise.any(sources.map(async source => {
+          const value = String(await source() || '').trim();
+          if (!isIPv4(value)) throw new Error('Invalid IPv4 response');
+          return value;
+        }));
+        return ip;
       }
 
       async function detectCountry(ip) {
@@ -221,9 +220,11 @@
             throw new Error('Country unavailable');
           }
         ];
-        const results = await Promise.allSettled(sources.map(source => source()));
-        const country = results.find(result => result.status === 'fulfilled' && result.value);
-        return country ? country.value : 'Unknown country';
+        try {
+          return await Promise.any(sources.map(source => source()));
+        } catch {
+          return 'Unknown country';
+        }
       }
 
       detectPublicIPv4()
