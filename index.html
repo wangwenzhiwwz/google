@@ -85,14 +85,16 @@
   </header>
 
   <main>
+    <a class="google-logo-link" href="https://www.google.com/" aria-label="Go to Google homepage">
     <picture>
       <source srcset="https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_272x92dp.png" media="(prefers-color-scheme: dark)">
       <img class="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" width="272" height="92" fetchpriority="high">
     </picture>
+    </a>
     <form class="search-form" id="searchForm" action="https://www.google.com/search" method="get" role="search">
       <div class="searchbox">
         <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14A4.5 4.5 0 1 1 9.5 5a4.5 4.5 0 0 1 0 9z"/></svg>
-        <input id="query" type="search" name="q" aria-label="Search Google" autocomplete="off" spellcheck="false" required autofocus>
+        <input id="query" type="search" name="q" aria-label="Search Google" autocomplete="off" spellcheck="false" required>
         <button class="clear-btn" id="clearBtn" type="button" aria-label="Clear search" title="Clear">×</button>
         <button class="voice-btn" id="voiceBtn" type="button" aria-label="Search by voice" title="Search by voice">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285f4" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path fill="#34a853" d="M17 11a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.93V21h2v-3.07A7 7 0 0 0 19 11z"/><path fill="#ea4335" d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3z"/><path fill="#fbbc05" d="M9 5v6a3 3 0 0 0 3 3V2a3 3 0 0 0-3 3z"/></svg>
@@ -201,7 +203,7 @@
       });
 
       const updateClear = () => clear.classList.toggle('visible', input.value.length > 0);
-      input.addEventListener('focus', () => { historyOpen = true; renderHistory(); });
+      input.addEventListener('click', () => { historyOpen = true; renderHistory(); });
       input.addEventListener('input', () => { updateClear(); renderHistory(); });
       input.addEventListener('blur', () => { window.setTimeout(() => { if (!recentSection.contains(document.activeElement)) { historyOpen = false; renderHistory(); } }, 120); });
       clear.addEventListener('click', () => {
