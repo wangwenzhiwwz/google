@@ -42,11 +42,23 @@
     .search-btn{min-height:36px;padding:0 16px;border:1px solid var(--hover);border-radius:4px;background:var(--hover);color:var(--text);cursor:pointer;transition:border-color .15s,box-shadow .15s}
     .search-btn:hover,.search-btn:focus-visible{border-color:var(--line);box-shadow:0 1px 1px rgba(0,0,0,.1);outline:0}
     .hint{min-height:22px;margin-top:16px;color:var(--muted);font-size:12px;text-align:center}
+    .recent{width:min(100%,584px);margin-top:8px;color:var(--muted)}
+    .recent[hidden]{display:none}
+    .recent-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 7px;font-size:12px}
+    .recent-clear{border:0;background:transparent;color:var(--muted);font-size:12px;cursor:pointer;padding:5px 7px;border-radius:6px}
+    .recent-clear:hover{background:var(--hover);color:var(--text)}
+    .recent-list{list-style:none;margin:0;padding:0}
+    .recent-item{display:flex;align-items:center;gap:8px;min-height:38px;padding:0 10px;border-radius:8px}
+    .recent-item:hover{background:var(--hover)}
+    .recent-query{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);text-align:left;padding:8px 2px;border:0;background:transparent;cursor:pointer}
+    .recent-remove{flex:none;border:0;background:transparent;color:var(--muted);width:28px;height:28px;border-radius:50%;font-size:18px;cursor:pointer;opacity:.65}
+    .recent-remove:hover{opacity:1;background:var(--page)}
+    .recent-clock{width:16px;height:16px;flex:none;color:var(--muted)}
     footer{background:var(--footer);color:var(--muted);font-size:14px}
     .region{padding:15px 30px;border-bottom:1px solid var(--footer-line)}
     .footer-links{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:14px 30px}
     .link-group{display:flex;flex-wrap:wrap;gap:20px}
-    @media(max-width:600px){.topbar{height:56px;padding:0 12px}.top-links{gap:14px}main{padding:54px 20px 38px}.logo{width:190px;margin-bottom:25px}.searchbox{height:46px;padding:0 12px;gap:9px}.buttons{margin-top:24px;gap:8px}.search-btn{padding:0 12px;font-size:13px}.hint{margin-top:20px}.region{padding:14px 20px}.footer-links{flex-direction:column;gap:18px;padding:18px 16px}.link-group{justify-content:center;gap:16px 22px}.link-group a{white-space:nowrap}}
+    @media(max-width:600px){.recent{margin-top:4px}.topbar{height:56px;padding:0 12px}.top-links{gap:14px}main{padding:54px 20px 38px}.logo{width:190px;margin-bottom:25px}.searchbox{height:46px;padding:0 12px;gap:9px}.buttons{margin-top:24px;gap:8px}.search-btn{padding:0 12px;font-size:13px}.hint{margin-top:20px}.region{padding:14px 20px}.footer-links{flex-direction:column;gap:18px;padding:18px 16px}.link-group{justify-content:center;gap:16px 22px}.link-group a{white-space:nowrap}}
     @media(max-height:560px){main{padding-top:24px}.logo{width:180px;margin-bottom:20px}.buttons{margin-top:18px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
   </style>
@@ -85,6 +97,10 @@
       </div>
       <div class="hint" id="hint" aria-live="polite"></div>
     </form>
+    <section class="recent" id="recentSection" aria-label="Recent searches" hidden>
+      <div class="recent-head"><span>Recent searches</span><button class="recent-clear" id="clearRecent" type="button">Clear history</button></div>
+      <ul class="recent-list" id="recentList"></ul>
+    </section>
   </main>
 
   <footer>
@@ -111,9 +127,67 @@
       const voice = document.getElementById('voiceBtn');
       const lucky = document.getElementById('luckyBtn');
       const hint = document.getElementById('hint');
+      const recentSection = document.getElementById('recentSection');
+      const recentList = document.getElementById('recentList');
+      const clearRecent = document.getElementById('clearRecent');
+      const HISTORY_KEY = 'google_recent_searches_v1';
+      const HISTORY_LIMIT = 6;
+
+      function readHistory() {
+        try {
+          const value = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+          return Array.isArray(value) ? value.filter(item => typeof item === 'string').slice(0, HISTORY_LIMIT) : [];
+        } catch (_) { return []; }
+      }
+      function saveSearch(value) {
+        const query = value.trim().replace(/\\s+/g, ' ').slice(0, 300);
+        if (!query) return;
+        const history = [query, ...readHistory().filter(item => item.toLocaleLowerCase() !== query.toLocaleLowerCase())].slice(0, HISTORY_LIMIT);
+        try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch (_) {}
+      }
+      function renderHistory() {
+        const history = readHistory();
+        recentList.replaceChildren();
+        recentSection.hidden = history.length === 0 || input.value.trim().length > 0;
+        history.forEach(query => {
+          const item = document.createElement('li');
+          item.className = 'recent-item';
+          const clock = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          clock.setAttribute('viewBox', '0 0 24 24');
+          clock.setAttribute('class', 'recent-clock');
+          clock.setAttribute('aria-hidden', 'true');
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('fill', 'currentColor');
+          path.setAttribute('d', 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 11h5v-2h-4V6h-2v6a1 1 0 0 0 1 1z');
+          clock.append(path);
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'recent-query';
+          button.textContent = query;
+          button.title = query;
+          button.addEventListener('click', () => { input.value = query; updateClear(); form.requestSubmit(); });
+          const remove = document.createElement('button');
+          remove.type = 'button';
+          remove.className = 'recent-remove';
+          remove.textContent = '×';
+          remove.setAttribute('aria-label', 'Remove recent search: ' + query);
+          remove.title = 'Remove';
+          remove.addEventListener('click', () => {
+            try { localStorage.setItem(HISTORY_KEY, JSON.stringify(readHistory().filter(item => item !== query))); } catch (_) {}
+            renderHistory();
+          });
+          item.append(clock, button, remove);
+          recentList.append(item);
+        });
+      }
+      form.addEventListener('submit', () => saveSearch(input.value));
+      clearRecent.addEventListener('click', () => {
+        try { localStorage.removeItem(HISTORY_KEY); } catch (_) {}
+        renderHistory();
+      });
 
       const updateClear = () => clear.classList.toggle('visible', input.value.length > 0);
-      input.addEventListener('input', updateClear);
+      input.addEventListener('input', () => { updateClear(); renderHistory(); });
       clear.addEventListener('click', () => {
         input.value = '';
         updateClear();
@@ -122,7 +196,7 @@
       lucky.addEventListener('click', () => {
         const q = input.value.trim();
         if (!q) { input.focus(); return; }
-        const params = new URLSearchParams({q, btnI: '1'});
+        saveSearch(q);\n        const params = new URLSearchParams({q, btnI: '1'});
         window.location.href = 'https://www.google.com/search?' + params.toString();
       });
 
