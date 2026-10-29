@@ -161,7 +161,7 @@
       const dropdownSearch = document.getElementById('dropdownSearch');
       const dropdownLucky = document.getElementById('dropdownLucky');
       const networkInfo = document.getElementById('networkInfo');
-      fetch('https://4.myip.is/', { cache: 'no-store' })
+      fetch('https://api4.my-ip.io/v2/ip.json', { cache: 'no-store' })
         .then(response => {
           if (!response.ok) throw new Error('IPv4 lookup failed');
           return response.json();
@@ -169,13 +169,14 @@
         .then(data => {
           const ip = data.ip;
           const octets = typeof ip === 'string' ? ip.split('.') : [];
-          if (octets.length !== 4 || octets.some(part => part.length < 1 || part.length > 3 || [...part].some(ch => ch < '0' || ch > '9') || Number(part) > 255)) throw new Error('IPv4 unavailable');
-          networkInfo.textContent = 'IPv4: ' + ip;
-          networkInfo.title = 'Public IPv4 address detected by myip.is';
+          if (data.type !== 'IPv4' || octets.length !== 4 || octets.some(part => part.length < 1 || part.length > 3 || [...part].some(ch => ch < '0' || ch > '9') || Number(part) > 255)) throw new Error('IPv4 unavailable');
+          const country = data.country && data.country.name ? data.country.name : data.country && data.country.code ? data.country.code : 'Unknown country';
+          networkInfo.textContent = country + ' · IPv4: ' + ip;
+          networkInfo.title = 'Public IPv4 address and approximate country detected by MyIP';
         })
         .catch(() => {
-          networkInfo.textContent = 'IPv4 unavailable on this network';
-          networkInfo.title = 'Could not detect a public IPv4 address';
+          networkInfo.textContent = 'IPv4 information unavailable';
+          networkInfo.title = 'Could not detect a public IPv4 address and country';
         });
       const HISTORY_KEY = 'google_recent_searches_v1';
       const HISTORY_LIMIT = 6;
