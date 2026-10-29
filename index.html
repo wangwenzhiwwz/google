@@ -28,7 +28,9 @@
     main{width:100%;flex:1;display:flex;flex-direction:column;align-items:center;padding:clamp(42px,10vh,100px) 22px 48px}
     .logo{display:block;width:272px;max-width:65vw;height:auto;margin:0 auto 26px}
     .search-form{width:min(100%,584px);position:relative}
-    .searchbox{height:46px;width:100%;display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:0 14px;gap:12px;transition:box-shadow .18s,border-color .18s,background .18s}\n    .search-form.history-open .searchbox{border-radius:26px 26px 0 0;border-bottom-color:transparent;box-shadow:0 1px 6px rgba(32,33,36,.22)}\n    .search-form.history-open .buttons{display:none}
+    .searchbox{height:46px;width:100%;display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:0 14px;gap:12px;transition:box-shadow .18s,border-color .18s,background .18s}
+    .search-form.history-open .searchbox{border-radius:26px 26px 0 0;border-bottom-color:transparent;box-shadow:0 1px 6px rgba(32,33,36,.22)}
+    .search-form.history-open .buttons{display:none}
     .searchbox:hover,.searchbox:focus-within{background:var(--page);border-color:transparent;box-shadow:0 1px 6px rgba(32,33,36,.28)}
     @media(prefers-color-scheme:dark){.searchbox:hover,.searchbox:focus-within{background:var(--hover);box-shadow:0 1px 6px rgba(0,0,0,.45)}}
     .search-icon{width:20px;height:20px;flex:none;color:#9aa0a6}
@@ -54,7 +56,11 @@
     .recent-query{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);text-align:left;padding:8px 2px;border:0;background:transparent;cursor:pointer}
     .recent-remove{flex:none;border:0;background:transparent;color:var(--muted);width:28px;height:28px;border-radius:50%;font-size:18px;cursor:pointer;opacity:.65}
     .recent-remove:hover{opacity:1;background:var(--page)}
-    .recent-clock{width:20px;height:20px;flex:none;color:#9aa0a6}\n    .recent-actions{display:flex;justify-content:center;gap:12px;padding-top:16px}\n    .search-form.history-open .recent-actions .search-btn{min-height:42px;padding:0 22px;border-radius:8px;border-color:transparent}\n    .recent-remove{opacity:0;transition:opacity .15s}\n    .recent-item:hover .recent-remove,.recent-remove:focus-visible{opacity:1}
+    .recent-clock{width:20px;height:20px;flex:none;color:#9aa0a6}
+    .recent-actions{display:flex;justify-content:center;gap:12px;padding-top:16px}
+    .search-form.history-open .recent-actions .search-btn{min-height:42px;padding:0 22px;border-radius:8px;border-color:transparent}
+    .recent-remove{opacity:0;transition:opacity .15s}
+    .recent-item:hover .recent-remove,.recent-remove:focus-visible{opacity:1}
     footer{background:var(--footer);color:var(--muted);font-size:14px}
     .region{padding:15px 30px;border-bottom:1px solid var(--footer-line)}
     .footer-links{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:14px 30px}
@@ -153,7 +159,8 @@
       function renderHistory() {
         const history = readHistory();
         recentList.replaceChildren();
-        recentSection.hidden = !historyOpen || history.length === 0 || input.value.trim().length > 0;\n        form.classList.toggle('history-open', !recentSection.hidden);
+        recentSection.hidden = !historyOpen || history.length === 0 || input.value.trim().length > 0;
+        form.classList.toggle('history-open', !recentSection.hidden);
         history.forEach(query => {
           const item = document.createElement('li');
           item.className = 'recent-item';
@@ -185,7 +192,9 @@
           recentList.append(item);
         });
       }
-      form.addEventListener('submit', () => saveSearch(input.value));\n      dropdownSearch.addEventListener('click', () => { if (input.value.trim()) form.requestSubmit(); else input.focus(); });\n      dropdownLucky.addEventListener('click', () => lucky.click());
+      form.addEventListener('submit', () => saveSearch(input.value));
+      dropdownSearch.addEventListener('click', () => { if (input.value.trim()) form.requestSubmit(); else input.focus(); });
+      dropdownLucky.addEventListener('click', () => lucky.click());
       clearRecent.addEventListener('click', () => {
         try { localStorage.removeItem(HISTORY_KEY); } catch (_) {}
         renderHistory();
