@@ -26,7 +26,8 @@
     .top-right{display:flex;align-items:center;gap:20px}
     .top-right .top-links{gap:18px}
     .top-right .top-links>a:not(.apps){color:var(--text);transition:color .15s}.top-right .top-links>a:not(.apps):hover{color:var(--muted);text-decoration:underline}
-    .signin{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 22px;border-radius:4px;background:#0b57d0;color:#fff;font-size:14px;font-weight:500;white-space:nowrap;transition:background .15s}.signin:hover{background:#0a4dbb;text-decoration:none}
+    .profile-link{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden}
+    .profile-link img{width:32px;height:32px;object-fit:cover;border-radius:50%}
     .brand-link{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;transition:background .18s}
     .brand-link:hover,.icon-link:hover{background:var(--hover);text-decoration:none}
     .brand-link img{width:30px;height:30px;border-radius:50%}
@@ -96,11 +97,13 @@
       <nav class="top-links" aria-label="Google links">
         <a href="https://mail.google.com/">Gmail</a>
         <a href="https://images.google.com/">Images</a>
-        <a class="icon-link apps" href="https://www.google.com/intl/en/about/products" aria-label="Google apps" title="Google apps">
+        <a class="icon-link apps" href="https://app.wwz.im/" aria-label="WWZ apps" title="WWZ apps">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg>
         </a>
       </nav>
-      <a class="signin" href="https://accounts.google.com/">Sign in</a>
+      <a class="profile-link" href="https://www.wwz.im/" target="_blank" rel="noopener noreferrer" aria-label="WWZ account">
+        <img src="https://wangwenzhi.eu.org/images/favicon_io/apple-touch-icon.png" alt="WWZ">
+      </a>
     </div>
   </header>
 
