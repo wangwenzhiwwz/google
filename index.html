@@ -17,7 +17,13 @@
     a{color:inherit;text-decoration:none}
     a:hover{text-decoration:underline}
     button,input{font:inherit}
-    .topbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 22px}
+    .topbar{height:70px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+    .top-left{display:flex;align-items:center;gap:24px;font-size:13px}
+    .top-right{display:flex;align-items:center;gap:20px}
+    .top-right .top-links{gap:18px}
+    .top-right .top-links>a:not(.apps){color:#681da8}
+    .profile-link{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden}
+    .profile-link img{width:32px;height:32px;object-fit:cover;border-radius:50%}
     .brand-link{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;transition:background .18s}
     .brand-link:hover,.icon-link:hover{background:var(--hover);text-decoration:none}
     .brand-link img{width:30px;height:30px;border-radius:50%}
@@ -25,7 +31,7 @@
     .top-links>a:not(.apps){padding:7px 0}
     .icon-link{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
     .apps svg{width:22px;height:22px;fill:currentColor}
-    main{width:100%;flex:1;display:flex;flex-direction:column;align-items:center;padding:clamp(42px,10vh,100px) 22px 48px}
+    main{width:100%;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;padding:clamp(110px,16vh,160px) 22px 48px}
     .logo{display:block;width:272px;max-width:65vw;height:auto;margin:0 auto 26px}
     .search-form{width:min(100%,584px);position:relative}
     .searchbox{height:46px;width:100%;display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:0 14px;gap:12px;transition:box-shadow .18s,border-color .18s,background .18s}
@@ -66,27 +72,35 @@
     .recent-query:focus-visible,.recent-remove:focus-visible,.recent-clear:focus-visible,.search-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
     .recent-query:focus-visible{border-radius:6px}
     @media(hover:none){.recent-remove{opacity:.8}}
-    footer{background:var(--footer);color:var(--muted);font-size:14px}
-    .region{padding:15px 30px;border-bottom:1px solid var(--footer-line)}
-    .footer-links{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:14px 30px}
-    .link-group{display:flex;flex-wrap:wrap;gap:20px}
-    @media(max-width:600px){.recent{top:45px}.topbar{height:56px;padding:0 12px}.top-links{gap:14px}main{padding:54px 20px 38px}.logo{width:190px;margin-bottom:25px}.searchbox{height:46px;padding:0 12px;gap:9px}.buttons{margin-top:24px;gap:8px}.search-btn{padding:0 12px;font-size:13px}.hint{margin-top:20px}.region{padding:14px 20px}.footer-links{flex-direction:column;gap:18px;padding:18px 16px}.link-group{justify-content:center;gap:16px 22px}.link-group a{white-space:nowrap}}
+    footer{background:var(--page);color:var(--text);font-size:13px;flex:none}
+    .footer-links{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;padding:14px 32px 12px}
+    .link-group{display:flex;flex-wrap:wrap;gap:28px}
+    .footer-center{text-align:center;white-space:nowrap}
+    .footer-links .link-group:last-child{justify-content:flex-end}
+    @media(max-width:700px){.topbar{height:60px;padding:0 16px}.top-left{gap:18px}.top-right{gap:12px}.top-right .top-links{gap:12px}main{padding:clamp(72px,12vh,120px) 20px 32px}.logo{width:220px;margin-bottom:25px}.searchbox{height:46px;padding:0 12px;gap:9px}.buttons{margin-top:24px;gap:8px}.search-btn{padding:0 12px;font-size:13px}.hint{margin-top:20px}.footer-links{grid-template-columns:1fr;justify-items:center;gap:16px;padding:18px 16px}.footer-center{white-space:normal;grid-row:1}.footer-links .link-group:last-child{justify-content:center}.link-group{justify-content:center;gap:16px 22px}.link-group a{white-space:nowrap}}
+    @media(max-height:560px){main{padding-top:24px}.logo{width:180px;margin-bottom:20px}.buttons{margin-top:18px}}
     @media(max-height:560px){main{padding-top:24px}.logo{width:180px;margin-bottom:20px}.buttons{margin-top:18px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand-link" href="https://www.wwz.im/" target="_blank" rel="noopener noreferrer" aria-label="WWZ homepage">
-      <img src="https://wangwenzhi.eu.org/images/favicon_io/apple-touch-icon.png" alt="WWZ">
-    </a>
-    <nav class="top-links" aria-label="Google links">
-      <a href="https://mail.google.com/">Gmail</a>
-      <a href="https://images.google.com/">Images</a>
-      <a class="icon-link apps" href="https://about.google/products/" target="_blank" rel="noopener noreferrer" aria-label="Google apps" title="Google apps">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg>
-      </a>
+    <nav class="top-left" aria-label="Google information">
+      <a href="https://about.google/">About</a>
+      <a href="https://store.google.com/">Store</a>
     </nav>
+    <div class="top-right">
+      <nav class="top-links" aria-label="Google links">
+        <a href="https://mail.google.com/">Gmail</a>
+        <a href="https://images.google.com/">Images</a>
+        <a class="icon-link apps" href="https://about.google/products/" target="_blank" rel="noopener noreferrer" aria-label="Google apps" title="Google apps">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg>
+        </a>
+      </nav>
+      <a class="profile-link" href="https://www.wwz.im/" target="_blank" rel="noopener noreferrer" aria-label="WWZ account">
+        <img src="https://wangwenzhi.eu.org/images/favicon_io/apple-touch-icon.png" alt="WWZ">
+      </a>
+    </div>
   </header>
 
   <main>
@@ -119,14 +133,13 @@
   </main>
 
   <footer>
-    <div class="region">United States</div>
     <div class="footer-links">
       <nav class="link-group" aria-label="About Google">
-        <a href="https://about.google/">About</a>
         <a href="https://ads.google.com/">Advertising</a>
         <a href="https://smallbusiness.google.com/">Business</a>
         <a href="https://www.google.com/search/howsearchworks/">How Search works</a>
       </nav>
+      <div class="footer-center">Build, create, and do more with AI tools from Google</div>
       <nav class="link-group" aria-label="Privacy and settings">
         <a href="https://policies.google.com/privacy">Privacy</a>
         <a href="https://policies.google.com/terms">Terms</a>
