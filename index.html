@@ -161,20 +161,20 @@
       const dropdownSearch = document.getElementById('dropdownSearch');
       const dropdownLucky = document.getElementById('dropdownLucky');
       const networkInfo = document.getElementById('networkInfo');
-      fetch('https://ipwho.is/', { cache: 'no-store' })
+      fetch('https://api4.ipwho.is/', { cache: 'no-store' })
         .then(response => {
-          if (!response.ok) throw new Error('Network lookup failed');
+          if (!response.ok) throw new Error('IPv4 lookup failed');
           return response.json();
         })
         .then(data => {
-          if (!data.success || !data.ip) throw new Error('Network lookup unavailable');
+          if (!data.success || !data.ip || data.type !== 'IPv4') throw new Error('IPv4 unavailable');
           const country = data.country || data.country_code || 'Unknown country';
-          networkInfo.textContent = country + ' · IP: ' + data.ip;
-          networkInfo.title = 'Country detected from your public IP address';
+          networkInfo.textContent = country + ' · IPv4: ' + data.ip;
+          networkInfo.title = 'Public IPv4 address detected from your network';
         })
         .catch(() => {
-          networkInfo.textContent = 'Country and IP unavailable';
-          networkInfo.title = 'Could not detect your public IP address';
+          networkInfo.textContent = 'IPv4 information unavailable';
+          networkInfo.title = 'Could not detect a public IPv4 address';
         });
       const HISTORY_KEY = 'google_recent_searches_v1';
       const HISTORY_LIMIT = 6;
