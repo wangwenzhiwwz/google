@@ -142,7 +142,7 @@
         } catch (_) { return []; }
       }
       function saveSearch(value) {
-        const query = value.trim().replace(/\\s+/g, ' ').slice(0, 300);
+        const query = value.trim().replace(/\s+/g, ' ').slice(0, 300);
         if (!query) return;
         const history = [query, ...readHistory().filter(item => item.toLocaleLowerCase() !== query.toLocaleLowerCase())].slice(0, HISTORY_LIMIT);
         try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch (_) {}
