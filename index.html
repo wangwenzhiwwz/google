@@ -7,11 +7,9 @@
   <meta name="theme-color" content="#202124" media="(prefers-color-scheme: dark)">
   <meta name="description" content="A clean, minimal Google Search homepage.">
   <title>Google</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=9">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=7">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=7">
-  <link rel="shortcut icon" href="/favicon.ico?v=7" type="image/x-icon">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=7">
+  <link rel="icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="https://www.google.com/s2/favicons?domain=google.com&sz=180">
   <meta name="apple-mobile-web-app-title" content="Google">
   <style>
     :root{color-scheme:light dark;--page:#fff;--text:#202124;--muted:#5f6368;--line:#dfe1e5;--hover:#f8f9fa;--footer:#f2f2f2;--footer-line:#dadce0;--focus:#1a73e8}
@@ -28,8 +26,7 @@
     .top-right{display:flex;align-items:center;gap:20px}
     .top-right .top-links{gap:18px}
     .top-right .top-links>a:not(.apps){color:var(--text);transition:color .15s}.top-right .top-links>a:not(.apps):hover{color:var(--muted);text-decoration:underline}
-    .profile-link{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden}
-    .profile-link img{width:32px;height:32px;object-fit:cover;border-radius:50%}
+    .signin{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 22px;border-radius:4px;background:#0b57d0;color:#fff;font-size:14px;font-weight:500;white-space:nowrap;transition:background .15s}.signin:hover{background:#0a4dbb;text-decoration:none}
     .brand-link{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;transition:background .18s}
     .brand-link:hover,.icon-link:hover{background:var(--hover);text-decoration:none}
     .brand-link img{width:30px;height:30px;border-radius:50%}
@@ -99,13 +96,11 @@
       <nav class="top-links" aria-label="Google links">
         <a href="https://mail.google.com/">Gmail</a>
         <a href="https://images.google.com/">Images</a>
-        <a class="icon-link apps" href="https://app.wwz.im/" aria-label="WWZ apps" title="WWZ apps">
+        <a class="icon-link apps" href="https://www.google.com/intl/en/about/products" aria-label="Google apps" title="Google apps">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg>
         </a>
       </nav>
-      <a class="profile-link" href="https://www.wwz.im/" target="_blank" rel="noopener noreferrer" aria-label="WWZ account">
-        <img src="https://wangwenzhi.eu.org/images/favicon_io/apple-touch-icon.png" alt="WWZ">
-      </a>
+      <a class="signin" href="https://accounts.google.com/">Sign in</a>
     </div>
   </header>
 
