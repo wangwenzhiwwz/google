@@ -161,22 +161,81 @@
       const dropdownSearch = document.getElementById('dropdownSearch');
       const dropdownLucky = document.getElementById('dropdownLucky');
       const networkInfo = document.getElementById('networkInfo');
-      fetch('https://api4.my-ip.io/v2/ip.json', { cache: 'no-store' })
-        .then(response => {
-          if (!response.ok) throw new Error('IPv4 lookup failed');
-          return response.json();
-        })
-        .then(data => {
-          const ip = data.ip;
-          const octets = typeof ip === 'string' ? ip.split('.') : [];
-          if (data.type !== 'IPv4' || octets.length !== 4 || octets.some(part => part.length < 1 || part.length > 3 || [...part].some(ch => ch < '0' || ch > '9') || Number(part) > 255)) throw new Error('IPv4 unavailable');
-          const country = data.country && data.country.name ? data.country.name : data.country && data.country.code ? data.country.code : 'Unknown country';
+      networkInfo.textContent = 'Detecting IPv4…';
+      networkInfo.title = 'Detecting public IPv4 address and country';
+
+      const isIPv4 = value => {
+        if (typeof value !== 'string') return false;
+        const parts = value.trim().split('.');
+        return parts.length === 4 && parts.every(part =>
+          part.length > 0 && part.length <= 3 &&
+          [...part].every(ch => ch >= '0' && ch <= '9') &&
+          Number(part) >= 0 && Number(part) <= 255
+        );
+      };
+
+      const fetchJson = async (url, timeout = 5000) => {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeout);
+        try {
+          const response = await fetch(url, { cache: 'no-store', signal: controller.signal });
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return await response.json();
+        } finally {
+          clearTimeout(timer);
+        }
+      };
+
+      async function detectPublicIPv4() {
+        const sources = [
+          async () => {
+            const data = await fetchJson('https://api.ipify.org?format=json');
+            return data.ip;
+          },
+          async () => (await fetchJson('https://ipv4.icanhazip.com')).ip,
+          async () => (await fetchJson('https://4.myip.is/')).ip,
+          async () => (await fetchJson('https://api4.my-ip.io/v2/ip.json')).ip
+        ];
+        const results = await Promise.allSettled(sources.map(source => source()));
+        const ip = results.find(result => result.status === 'fulfilled' && isIPv4(String(result.value || '').trim()));
+        if (!ip) throw new Error('No IPv4 lookup service succeeded');
+        return String(ip.value).trim();
+      }
+
+      async function detectCountry(ip) {
+        const sources = [
+          async () => {
+            const data = await fetchJson('https://ipwho.is/' + encodeURIComponent(ip));
+            if (data.success && (data.country || data.country_code)) return data.country || data.country_code;
+            throw new Error('Country unavailable');
+          },
+          async () => {
+            const data = await fetchJson('https://ipapi.co/' + encodeURIComponent(ip) + '/json/');
+            if (!data.error && (data.country_name || data.country)) return data.country_name || data.country;
+            throw new Error('Country unavailable');
+          },
+          async () => {
+            const data = await fetchJson('https://ipinfo.io/' + encodeURIComponent(ip) + '/json');
+            if (data.country) return data.country;
+            throw new Error('Country unavailable');
+          }
+        ];
+        const results = await Promise.allSettled(sources.map(source => source()));
+        const country = results.find(result => result.status === 'fulfilled' && result.value);
+        return country ? country.value : 'Unknown country';
+      }
+
+      detectPublicIPv4()
+        .then(async ip => {
+          networkInfo.textContent = 'IPv4: ' + ip;
+          networkInfo.title = 'Public IPv4 address detected';
+          const country = await detectCountry(ip);
           networkInfo.textContent = country + ' · IPv4: ' + ip;
-          networkInfo.title = 'Public IPv4 address and approximate country detected by MyIP';
+          networkInfo.title = 'Public IPv4 address and approximate country';
         })
         .catch(() => {
-          networkInfo.textContent = 'IPv4 information unavailable';
-          networkInfo.title = 'Could not detect a public IPv4 address and country';
+          networkInfo.textContent = 'Public IPv4 unavailable';
+          networkInfo.title = 'This network may not have IPv4 connectivity, or all lookup services may be blocked';
         });
       const HISTORY_KEY = 'google_recent_searches_v1';
       const HISTORY_LIMIT = 6;
