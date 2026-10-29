@@ -27,7 +27,7 @@
     .apps svg{width:22px;height:22px;fill:currentColor}
     main{width:100%;flex:1;display:flex;flex-direction:column;align-items:center;padding:clamp(42px,10vh,100px) 22px 48px}
     .logo{display:block;width:272px;max-width:65vw;height:auto;margin:0 auto 26px}
-    .search-form{width:min(100%,584px)}
+    .search-form{width:min(100%,584px);position:relative}
     .searchbox{height:46px;width:100%;display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:0 14px;gap:12px;transition:box-shadow .18s,border-color .18s,background .18s}
     .searchbox:hover,.searchbox:focus-within{background:var(--page);border-color:transparent;box-shadow:0 1px 6px rgba(32,33,36,.28)}
     @media(prefers-color-scheme:dark){.searchbox:hover,.searchbox:focus-within{background:var(--hover);box-shadow:0 1px 6px rgba(0,0,0,.45)}}
@@ -42,9 +42,10 @@
     .search-btn{min-height:36px;padding:0 16px;border:1px solid var(--hover);border-radius:4px;background:var(--hover);color:var(--text);cursor:pointer;transition:border-color .15s,box-shadow .15s}
     .search-btn:hover,.search-btn:focus-visible{border-color:var(--line);box-shadow:0 1px 1px rgba(0,0,0,.1);outline:0}
     .hint{min-height:22px;margin-top:16px;color:var(--muted);font-size:12px;text-align:center}
-    .recent{width:min(100%,584px);margin-top:8px;color:var(--muted)}
+    .recent{position:absolute;top:49px;left:0;z-index:5;width:100%;margin:0;padding:5px 8px 8px;color:var(--muted);background:var(--page);border-radius:20px;box-shadow:0 4px 16px rgba(32,33,36,.2)}
+    @media(prefers-color-scheme:dark){.recent{box-shadow:0 4px 18px rgba(0,0,0,.5)}}
     .recent[hidden]{display:none}
-    .recent-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 7px;font-size:12px}
+    .recent-head{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 5px;font-size:12px}
     .recent-clear{border:0;background:transparent;color:var(--muted);font-size:12px;cursor:pointer;padding:5px 7px;border-radius:6px}
     .recent-clear:hover{background:var(--hover);color:var(--text)}
     .recent-list{list-style:none;margin:0;padding:0}
@@ -58,7 +59,7 @@
     .region{padding:15px 30px;border-bottom:1px solid var(--footer-line)}
     .footer-links{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:14px 30px}
     .link-group{display:flex;flex-wrap:wrap;gap:20px}
-    @media(max-width:600px){.recent{margin-top:4px}.topbar{height:56px;padding:0 12px}.top-links{gap:14px}main{padding:54px 20px 38px}.logo{width:190px;margin-bottom:25px}.searchbox{height:46px;padding:0 12px;gap:9px}.buttons{margin-top:24px;gap:8px}.search-btn{padding:0 12px;font-size:13px}.hint{margin-top:20px}.region{padding:14px 20px}.footer-links{flex-direction:column;gap:18px;padding:18px 16px}.link-group{justify-content:center;gap:16px 22px}.link-group a{white-space:nowrap}}
+    @media(max-width:600px){.recent{top:49px}.topbar{height:56px;padding:0 12px}.top-links{gap:14px}main{padding:54px 20px 38px}.logo{width:190px;margin-bottom:25px}.searchbox{height:46px;padding:0 12px;gap:9px}.buttons{margin-top:24px;gap:8px}.search-btn{padding:0 12px;font-size:13px}.hint{margin-top:20px}.region{padding:14px 20px}.footer-links{flex-direction:column;gap:18px;padding:18px 16px}.link-group{justify-content:center;gap:16px 22px}.link-group a{white-space:nowrap}}
     @media(max-height:560px){main{padding-top:24px}.logo{width:180px;margin-bottom:20px}.buttons{margin-top:18px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
   </style>
@@ -91,16 +92,16 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285f4" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path fill="#34a853" d="M17 11a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.93V21h2v-3.07A7 7 0 0 0 19 11z"/><path fill="#ea4335" d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3z"/><path fill="#fbbc05" d="M9 5v6a3 3 0 0 0 3 3V2a3 3 0 0 0-3 3z"/></svg>
         </button>
       </div>
+      <section class="recent" id="recentSection" aria-label="Recent searches" hidden>
+        <div class="recent-head"><span>Recent searches</span><button class="recent-clear" id="clearRecent" type="button">Clear history</button></div>
+        <ul class="recent-list" id="recentList"></ul>
+      </section>
       <div class="buttons">
         <button class="search-btn" type="submit">Google Search</button>
         <button class="search-btn" id="luckyBtn" type="button">I'm Feeling Lucky</button>
       </div>
       <div class="hint" id="hint" aria-live="polite"></div>
     </form>
-    <section class="recent" id="recentSection" aria-label="Recent searches" hidden>
-      <div class="recent-head"><span>Recent searches</span><button class="recent-clear" id="clearRecent" type="button">Clear history</button></div>
-      <ul class="recent-list" id="recentList"></ul>
-    </section>
   </main>
 
   <footer>
@@ -132,6 +133,7 @@
       const clearRecent = document.getElementById('clearRecent');
       const HISTORY_KEY = 'google_recent_searches_v1';
       const HISTORY_LIMIT = 6;
+      let historyOpen = false;
 
       function readHistory() {
         try {
@@ -148,7 +150,7 @@
       function renderHistory() {
         const history = readHistory();
         recentList.replaceChildren();
-        recentSection.hidden = history.length === 0 || input.value.trim().length > 0;
+        recentSection.hidden = !historyOpen || history.length === 0 || input.value.trim().length > 0;
         history.forEach(query => {
           const item = document.createElement('li');
           item.className = 'recent-item';
@@ -187,11 +189,15 @@
       });
 
       const updateClear = () => clear.classList.toggle('visible', input.value.length > 0);
+      input.addEventListener('focus', () => { historyOpen = true; renderHistory(); });
       input.addEventListener('input', () => { updateClear(); renderHistory(); });
+      input.addEventListener('blur', () => { window.setTimeout(() => { if (!recentSection.contains(document.activeElement)) { historyOpen = false; renderHistory(); } }, 120); });
       clear.addEventListener('click', () => {
         input.value = '';
         updateClear();
+        historyOpen = true;
         input.focus();
+        renderHistory();
       });
       lucky.addEventListener('click', () => {
         const q = input.value.trim();
@@ -235,9 +241,10 @@
           event.preventDefault();
           input.focus();
         }
-        if (event.key === 'Escape' && document.activeElement === input && input.value) {
-          input.value = '';
-          updateClear();
+        if (event.key === 'Escape' && historyOpen) {
+          historyOpen = false;
+          renderHistory();
+          if (document.activeElement === input && input.value) { input.value = ''; updateClear(); }
         }
       });
       updateClear();
