@@ -127,11 +127,11 @@
       </div>
       <section class="recent" id="recentSection" aria-label="Recent searches" hidden>
         <ul class="recent-list" id="recentList"></ul>
-        <div class="recent-actions"><button class="search-btn" id="dropdownSearch" type="button">Google Search</button><button class="search-btn" id="dropdownLucky" type="button">I'm Feeling Lucky</button></div>
+        <div class="recent-actions"><button class="search-btn" id="dropdownSearch" type="button">Google Search</button><button class="search-btn" id="dropdownImages" type="button">Google Images</button></div>
       </section>
       <div class="buttons">
         <button class="search-btn" type="submit">Google Search</button>
-        <button class="search-btn" id="luckyBtn" type="button">I'm Feeling Lucky</button>
+        <button class="search-btn" id="imagesBtn" type="button">Google Images</button>
       </div>
       <div class="hint" id="hint" aria-live="polite"></div>
     </form>
@@ -158,12 +158,12 @@
       const input = document.getElementById('query');
       const clear = document.getElementById('clearBtn');
       const voice = document.getElementById('voiceBtn');
-      const lucky = document.getElementById('luckyBtn');
+      const images = document.getElementById('imagesBtn');
       const hint = document.getElementById('hint');
       const recentSection = document.getElementById('recentSection');
       const recentList = document.getElementById('recentList');
       const dropdownSearch = document.getElementById('dropdownSearch');
-      const dropdownLucky = document.getElementById('dropdownLucky');
+      const dropdownImages = document.getElementById('dropdownImages');
       const networkInfo = document.getElementById('networkInfo');
       networkInfo.textContent = 'Detecting IPv4…';
       networkInfo.title = 'Detecting public IPv4 address and country';
@@ -309,7 +309,14 @@
       }
       form.addEventListener('submit', () => saveSearch(input.value));
       dropdownSearch.addEventListener('click', () => { if (input.value.trim()) form.requestSubmit(); else input.focus(); });
-      dropdownLucky.addEventListener('click', () => lucky.click());
+      const searchImages = () => {
+        const q = input.value.trim();
+        if (!q) { input.focus(); return; }
+        saveSearch(q);
+        const params = new URLSearchParams({q, tbm: 'isch'});
+        window.location.href = 'https://www.google.com/search?' + params.toString();
+      };
+      dropdownImages.addEventListener('click', searchImages);
 
       const updateClear = () => clear.classList.toggle('visible', input.value.length > 0);
       input.addEventListener('click', () => { historyRequestedByClick = true; historyOpen = true; renderHistory(); });
@@ -322,13 +329,7 @@
         input.focus();
         renderHistory();
       });
-      lucky.addEventListener('click', () => {
-        const q = input.value.trim();
-        if (!q) { input.focus(); return; }
-        saveSearch(q);
-        const params = new URLSearchParams({q, btnI: '1'});
-        window.location.href = 'https://www.google.com/search?' + params.toString();
-      });
+      images.addEventListener('click', searchImages);
 
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
