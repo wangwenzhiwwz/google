@@ -44,7 +44,7 @@
     .search-form.history-open .buttons{display:none}
     .searchbox:hover,.searchbox:focus-within{background:var(--page);border-color:#aeb4bd;box-shadow:0 2px 8px rgba(32,33,36,.16)}
     @media(prefers-color-scheme:dark){.searchbox:hover,.searchbox:focus-within{background:var(--hover);box-shadow:0 1px 6px rgba(0,0,0,.45)}}
-    .search-icon{width:20px;height:20px;flex:none;color:#9aa0a6}
+    .search-icon{width:16px;height:16px;flex:none;color:#9aa0a6}
     #query{min-width:0;flex:1;height:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:16px}
     #query::-webkit-search-cancel-button,#query::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
     #query::-webkit-search-cancel-button,#query::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
@@ -57,7 +57,7 @@
     .search-btn{min-height:36px;padding:0 16px;border:1px solid var(--hover);border-radius:4px;background:var(--hover);color:var(--text);cursor:pointer;transition:border-color .15s,box-shadow .15s}
     .search-btn:hover,.search-btn:focus-visible{border-color:var(--line);box-shadow:0 1px 1px rgba(0,0,0,.1);outline:0}
     .hint{min-height:22px;margin-top:16px;color:var(--muted);font-size:12px;text-align:center}
-    .recent{max-height:min(440px,calc(100vh - 180px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none;position:absolute;top:45px;left:0;z-index:5;width:100%;margin:0;padding:5px 10px 10px;color:var(--muted);background:var(--page);border:1px solid var(--line);border-top:1px solid var(--footer-line);border-radius:0 0 26px 26px;box-shadow:0 4px 10px rgba(32,33,36,.18)}
+    .recent{max-height:min(440px,calc(100vh - 180px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none;position:absolute;top:45px;left:0;z-index:5;width:100%;margin:0;padding:4px 8px 8px;color:var(--muted);background:var(--page);border:1px solid var(--line);border-top:1px solid var(--footer-line);border-radius:0 0 26px 26px;box-shadow:0 4px 10px rgba(32,33,36,.18)}
     @media(prefers-color-scheme:dark){.recent{box-shadow:0 4px 18px rgba(0,0,0,.5)}}
     .recent::-webkit-scrollbar{display:none;width:0;height:0}
     .recent[hidden]{display:none}
@@ -65,14 +65,14 @@
     .recent-clear{border:0;background:transparent;color:var(--muted);font-size:14px;font-weight:500;cursor:pointer;padding:6px 8px;border-radius:6px}
     .recent-clear:hover{background:var(--hover);color:var(--text)}
     .recent-list{list-style:none;margin:0;padding:0}
-    .recent-item{display:flex;align-items:center;gap:12px;min-height:38px;padding:0 16px;border-radius:8px}
+    .recent-item{display:flex;align-items:center;gap:10px;min-height:32px;padding:0 12px;border-radius:7px}
     .recent-item:hover{background:var(--hover)}
-    .recent-query{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);text-align:left;padding:5px 2px;border:0;background:transparent;cursor:pointer;font-family:Arial,sans-serif;font-size:15px;font-weight:500;line-height:20px;letter-spacing:0}
-    .recent-remove{flex:none;border:0;background:transparent;color:var(--muted);width:28px;height:28px;border-radius:50%;font-size:18px;cursor:pointer;opacity:.65}
+    .recent-query{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);text-align:left;padding:3px 2px;border:0;background:transparent;cursor:pointer;font-family:Arial,sans-serif;font-size:14px;font-weight:400;line-height:18px;letter-spacing:0}
+    .recent-remove{flex:none;border:0;background:transparent;color:var(--muted);width:24px;height:24px;border-radius:50%;font-size:17px;cursor:pointer;opacity:.65}
     .recent-remove:hover{opacity:1;background:var(--page)}
     .recent-clock{width:20px;height:20px;flex:none;color:#9aa0a6}
-    .recent-actions{display:flex;justify-content:center;gap:12px;padding-top:16px}
-    .search-form.history-open .recent-actions .search-btn{min-height:42px;padding:0 22px;border-radius:8px;border-color:transparent}
+    .recent-actions{display:flex;justify-content:center;gap:8px;padding-top:8px}
+    .search-form.history-open .recent-actions .search-btn{min-height:34px;padding:0 18px;border-radius:8px;border-color:transparent}
     .recent-remove{opacity:0;transition:opacity .15s}
     .recent-item:hover .recent-remove,.recent-remove:focus-visible{opacity:1}
     .recent-query:focus-visible,.recent-remove:focus-visible,.recent-clear:focus-visible,.search-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
